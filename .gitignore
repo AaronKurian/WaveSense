@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+build/
+firmware/esp32-csi-node/sdkconfig
+firmware/esp32-csi-node/sdkconfig.old
+firmware/esp32-csi-node/managed_components/
+captures/

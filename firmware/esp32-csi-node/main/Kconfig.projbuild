@@ -1,0 +1,38 @@
+menu "Wi-Fi CSI sensing node"
+
+config CSI_WIFI_SSID
+    string "Wi-Fi SSID"
+    default ""
+
+config CSI_WIFI_PASSWORD
+    string "Wi-Fi password"
+    default ""
+
+config CSI_TARGET_IP
+    string "Laptop receiver IPv4 address"
+    default "0.0.0.0"
+
+config CSI_TARGET_PORT
+    int "Laptop receiver UDP port"
+    default 5005
+    range 1 65535
+
+config CSI_WIFI_CHANNEL
+    int "Expected Wi-Fi channel"
+    default 0
+    range 0 14
+    help
+        Optional diagnostic only. Use 0 to accept any AP channel. The station
+        connection follows the AP channel; this does not force a channel.
+
+config CSI_NODE_ID
+    int "Node ID"
+    default 1
+    range 1 255
+
+config CSI_MIN_SEND_INTERVAL_MS
+    int "Minimum interval between sent CSI packets"
+    default 20
+    range 10 1000
+
+endmenu

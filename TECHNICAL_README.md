@@ -86,7 +86,8 @@ Open:
 http://127.0.0.1:8088/
 ```
 
-The dashboard updates from live received packets.
+The dashboard uses only live received packets. It has no demo mode and no random
+animation.
 
 The dashboard always shows the expected Node 1 and Node 2 markers from the
 configured geometry. If a node is missing or stale, it is marked offline instead
@@ -277,7 +278,11 @@ against real calibration captures.
 
 ## Radar Visualization
 
-The dashboard shows a radar-style circular sensing view.
+The dashboard shows a radar-style circular sensing view:
+
+```text
+CSI HEURISTIC - NOT TRUE POSE
+```
 
 With one fresh node, the radar shows:
 
@@ -293,8 +298,9 @@ the persistence threshold yet, it shows:
 PRESENCE DETECTED - BUILDING STABLE CANDIDATE
 ```
 
-Candidate positions are coarse visualization coordinates. If packets stop
-arriving, the radar shows `NO FRESH CSI DATA`.
+Candidate positions are coarse visualization coordinates, not true physical XY.
+The radar has no random animation. If packets stop arriving, it shows
+`NO FRESH CSI DATA`.
 
 ## Build Firmware
 

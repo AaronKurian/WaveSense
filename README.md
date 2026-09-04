@@ -23,7 +23,7 @@ So we decided to ask the Wi-Fi: "Did someone move?" and make it answer with sign
 
 ### The Solution (that nobody asked for)
 Two ESP32-S3 boards listen to CSI from a phone hotspot link, send compact UDP packets to a laptop, and a Python dashboard converts the signal changes into live motion and presence indicators.
-The dashboard presents a radar-style activity view backed by live CSI measurements.
+No fake camera pose, no random animation, just real CSI-derived activity hypotheses.
 
 ## Technical Details
 ### Technologies/Components Used

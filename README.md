@@ -10,8 +10,8 @@
 
 
 ### Team Members
-- Team Lead: Aaron Kurian Abraham - Govt. Model Engineering College
-- Member 2: Elizabeth Bobby - Govt. Model Engineering College
+- Team Lead: Elizabeth Bobby - Govt. Model Engineering College
+- Member 2: Aaron Kurian Abraham - Govt. Model Engineering College
 
 ### Project Description
 WaveSense is a camera-free Wi-Fi CSI sensing experiment that uses ESP32-S3 nodes and a laptop dashboard to detect motion and presence from real Wi-Fi signal changes.
@@ -119,21 +119,6 @@ Dashboard runs at http://127.0.0.1:8088/
    +---- UDP CSI ----> [Laptop Receiver + Dashboard]
 ```
 *High-level sensing schematic for the two-node CSI setup.*
-
-# Build Photos
-![Components](https://github.com/user-attachments/assets/8920b256-2ba8-4988-b824-5351134eb4bd)
-*Available project image. Hardware build photos are not added yet.*
-
-![Build](https://github.com/user-attachments/assets/8920b256-2ba8-4988-b824-5351134eb4bd)
-*Available project image. ESP32 flashing/debug build photos are not added yet.*
-
-![Final](https://github.com/user-attachments/assets/8920b256-2ba8-4988-b824-5351134eb4bd)
-*Available project image. Final installation photo is not added yet.*
-
-### Project Demo
-# Video
-No video recorded yet.
-*The live demo runs locally through the WaveSense dashboard using real ESP32 CSI packets.*
 
 # Additional Demos
 - Live dashboard: `python3 visualization/dashboard.py --udp-bind 0.0.0.0 --udp-port 5005 --http-port 8088`

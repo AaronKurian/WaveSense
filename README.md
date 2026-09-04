@@ -1,4 +1,4 @@
-<img width="1280" height="640" alt="WaveSense dashboard screenshot" src="WAVESENSE.png" />
+<img width="1280" height="640" alt="git (1)" src="https://github.com/user-attachments/assets/8920b256-2ba8-4988-b824-5351134eb4bd" />
 
 
 
@@ -121,13 +121,13 @@ Dashboard runs at http://127.0.0.1:8088/
 *High-level sensing schematic for the two-node CSI setup.*
 
 # Build Photos
-![Components](WAVESENSE.png)
+![Components](https://github.com/user-attachments/assets/8920b256-2ba8-4988-b824-5351134eb4bd)
 *Available project image. Hardware build photos are not added yet.*
 
-![Build](WAVESENSE.png)
+![Build](https://github.com/user-attachments/assets/8920b256-2ba8-4988-b824-5351134eb4bd)
 *Available project image. ESP32 flashing/debug build photos are not added yet.*
 
-![Final](WAVESENSE.png)
+![Final](https://github.com/user-attachments/assets/8920b256-2ba8-4988-b824-5351134eb4bd)
 *Available project image. Final installation photo is not added yet.*
 
 ### Project Demo

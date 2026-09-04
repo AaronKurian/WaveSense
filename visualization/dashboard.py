@@ -24,12 +24,12 @@ HTML = """<!doctype html>
 <style>
 body { margin: 0; font-family: system-ui, sans-serif; background: #080b0f; color: #eee; }
 header { padding: 12px 16px; border-bottom: 1px solid #23313a; display: flex; gap: 24px; align-items: center; }
-main { display: grid; grid-template-columns: 1fr 320px; gap: 12px; padding: 12px; }
+main { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 12px; }
 canvas { width: 100%; background: #181818; border: 1px solid #333; }
 pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 #plots { display: grid; gap: 10px; }
 #radar { min-height: 540px; background: #05090d; border-color: #244657; }
-#side { display: grid; gap: 10px; align-content: start; }
+#side { display: none; }
 .panel { border: 1px solid #263741; background: #10161b; padding: 12px; }
 .label { color: #ffd24a; font-weight: 700; }
 .muted { color: #aaa; }
@@ -38,9 +38,7 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 </head>
 <body>
 <header>
-  <strong>Wi-Fi CSI Sensing</strong>
-  <span class="label">REAL CSI DATA</span>
-  <span class="muted">No demo mode. No random animation.</span>
+  <strong>WaveSense</strong>
 </header>
 <main>
   <section id="plots">
@@ -50,15 +48,6 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
     <canvas id="deviation" width="900" height="160"></canvas>
     <canvas id="scores" width="900" height="130"></canvas>
   </section>
-  <aside id="side">
-    <div class="panel"><pre id="stats">Waiting for packets...</pre></div>
-    <div class="panel">
-      <div class="label">CSI HEURISTIC - NOT TRUE POSE</div>
-      <p class="muted">Glowing points represent tracked CSI activity candidates. They are not camera-based person locations, confirmed people, or meter-distance estimates.</p>
-      <p class="muted">Multiple points require simultaneous separable CSI evidence from the two node streams. With one fresh node, the display can only show one mixed/unlocalized activity zone.</p>
-      <p class="muted">UI version: __UI_VERSION__</p>
-    </div>
-  </aside>
 </main>
 <script>
 const colors = ["#53d769", "#4aa3ff", "#ff6b6b", "#ffd24a"];
@@ -199,10 +188,8 @@ function drawRadar(canvas, data) {
   ctx.arc(cx, cy, radius, 0, Math.PI * 2);
   ctx.stroke();
 
-  ctx.fillStyle = "#ffd24a";
-  ctx.fillText("CSI HEURISTIC - NOT TRUE POSE", 12, 12);
   ctx.fillStyle = "#8fa3ad";
-  ctx.fillText("Radar range rings are relative CSI units, not meters", 12, 30);
+  ctx.fillText("Live sensing field", 12, 18);
 
   drawSensorMarkers(ctx, cx, cy, radius, data.node_status || {}, geometry);
   drawUnknownRegion(ctx, cx, cy, radius);
@@ -211,9 +198,9 @@ function drawRadar(canvas, data) {
   if (!fresh.length) {
     ctx.fillStyle = "#ff6b6b";
     ctx.font = "18px system-ui, sans-serif";
-    ctx.fillText("NO FRESH CSI DATA", cx - 86, cy + 6);
+    ctx.fillText("Waiting for sensor data", cx - 96, cy + 6);
     ctx.font = "13px system-ui, sans-serif";
-    ctx.fillText("If both ESP32 serial logs show sent/s > 0, open UDP/5005 in the laptop firewall.", cx - 242, cy + 30);
+    ctx.fillText("Check sensor power and network connection.", cx - 134, cy + 30);
     ctx.font = "10px sans-serif";
     return;
   }
@@ -362,7 +349,7 @@ function drawNodeWarnings(ctx, data) {
   const missing = statuses.filter(([, status]) => status.expected && !status.fresh).map(([id]) => id);
   const duplicate = statuses.filter(([, status]) => status.possible_duplicate_node_id).map(([id]) => id);
   const lines = [];
-  if (missing.length) lines.push(`Missing fresh node(s): ${missing.join(", ")}`);
+  if (missing.length) lines.push(`Offline sensor(s): ${missing.join(", ")}`);
   if (duplicate.length) lines.push(`Multiple sender IPs using node id: ${duplicate.join(", ")}`);
   if (!lines.length) return;
   ctx.fillStyle = "rgba(255, 107, 107, 0.92)";
@@ -390,26 +377,6 @@ async function refresh() {
   ]);
   drawSeries(document.getElementById("deviation"), "Baseline deviation / robust normalized CSI", data.nodes, "smoothed");
   drawScores(document.getElementById("scores"), data);
-	  document.getElementById("stats").textContent = JSON.stringify({
-      ui_version: data.ui_version,
-	    receiver: data.receiver,
-      geometry: data.geometry,
-      node_status: data.node_status,
-      measurements: data.measurements,
-	    fused: data.fused,
-	    nodes: Object.fromEntries(Object.entries(data.nodes).map(([id, n]) => [id, {
-	      rate_hz: n.rate_hz,
-	      rssi_dbm: n.rssi_dbm,
-	      last_seen_age_s: data.receiver.nodes[id]?.last_seen_age_s,
-	      presence_score: n.presence_score,
-	      robust_deviation: n.robust_deviation,
-	      temporal_diff_energy: n.temporal_diff_energy,
-	      median_amplitude: n.median_amplitude,
-	      mean_abs_deviation: n.mean_abs_deviation,
-	      motion: n.motion_level,
-	      motion_energy: n.motion_energy
-	    }]))
-	  }, null, 2);
 }
 setInterval(refresh, 250);
 refresh();
